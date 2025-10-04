@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Emergency Traffic Signal Automation</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 500px;
+      width: 100%;
+    }
+
+
+    /* Adjust height as needed */
+  </style>
+</head>
+
+<body>
+  <h1>Emergency Traffic Signal Automation</h1>
+  <div id="map"></div>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script>
+    // Initialize the map
+    var map = L.map('map').setView([12.9716, 77.5946], 13); // Bengaluru coordinates, zoom level 13
+
+    // Add a tile layer (you can use other tile providers)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+
+    // Ambulance Icon
+    var ambulanceIcon = L.icon({
+      iconUrl: "https://www.bing.com/ck/a?!&&p=03918fb6b8185787ad4f6aa5b1657f668bb4170df86cf18431aac0cc36400541JmltdHM9MTc1OTUzNjAwMA&ptn=3&ver=2&hsh=4&fclid=0c185d27-5423-645d-3050-48d055b86550&u=a1L2ltYWdlcy9zZWFyY2g_cT1pY29uK2ZvcithbWJ1bGFuY2Urd2Vic2l0ZStpY29uJmlkPTRCQ0M3RjMxRUI0QjU0OUY0RjdBQjMyRTkwQUYwNzRFREM3ODg3ODEmRk9STT1JQUNGSVI&ntb=1", // Example ambulance icon
+      iconSize: [32, 32],
+      iconAnchor: [16, 32]  // Center of the icon
+    });
+
+    // Initial Ambulance Location
+    var ambulanceMarker = L.marker([12.9716, 77.5946], {
+      icon: ambulanceIcon
+    }).addTo(map);
+    
+    // Sample Path (replace with actual Bengaluru roads)
+    var path = [
+      [12.9716, 77.5946],
+      [12.975, 77.60],
+      [12.98, 77.61],
+      [12.985, 77.615]
+    ];
+    
+    var pathIndex = 0;
+    var animationInterval = 100;  // milliseconds
+    
+    // Function to move the ambulance
+    function moveAmbulance() {
+      if (pathIndex < path.length) {
+        ambulanceMarker.setLatLng(path[pathIndex]);
+        pathIndex++;
+      } else {
+        pathIndex = 0;
+      }
+    }
+    // Move the ambulance every 2 seconds
+    setInterval(moveAmbulance, 2000);
+  </script>
+
+</body>
+
+</html>
+
